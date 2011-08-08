@@ -1,20 +1,21 @@
 class RestartButler::Base
   attr_reader :from_revision, :to_revision, :root_dir, :git_dir, :changes
-  attr_accessor :steps, :steps_ran
+  attr_accessor :steps, :env
 
   BUMPFILE_PATH = "Bumpfile"
 
-  def initialize(root_dir, from_revision, to_revision)
+  def initialize(root_dir, from_revision, to_revision, env = {})
     @root_dir = root_dir
     @from_revision = from_revision
     @to_revision = to_revision
     @git_dir = File.join(@root_dir, ".git")
     @forced_steps = []
     @steps = []
+    @env = env.map { |key, value| "#{key}=#{value}" }.join(" ")
   end
 
   def run_command(command)
-    cmd = "umask 002 && bash -l -c 'cd #{@root_dir} && #{command}'"
+    cmd = "umask 002 && bash -l -c 'cd #{@root_dir} && env #{env} #{command}'"
     log("[RB] Running: #{cmd}")
     system(cmd)
   end
@@ -67,8 +68,11 @@ class RestartButler::Base
       step_class = RestartButler::Steps.const_get(step_name.to_s.capitalize)
       step = step_class.new(self, opts)
       if trigger?(step, step_name)
+        log("Running step '#{step_name}'"
         step.execute
         @forced_steps |= step.triggers
+      else
+        log("Step skipped '#{step_name}'"
       end
     end
   end
