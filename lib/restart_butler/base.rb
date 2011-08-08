@@ -16,12 +16,12 @@ class RestartButler::Base
 
   def run_command(command)
     cmd = "umask 002 && bash -l -c 'cd #{@root_dir} && env #{env} #{command}'"
-    log("[RB] Running: #{cmd}")
+    log("Running: #{cmd}")
     system(cmd)
   end
 
   def log(message)
-    STDOUT.puts(message)
+    STDOUT.puts("[RB] " + message)
   end
 
   def changed_file?(file)
