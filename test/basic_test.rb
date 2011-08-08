@@ -29,14 +29,23 @@ class RestartButler::Steps::Options < RestartButler::Steps::Base
 end
 
 class BasicTest < Test::Unit::TestCase
-  def test_options_for_step
+  def setup
+    @butler = RestartButler::Base.new(".", nil, nil, {:logger => Logger.new("/dev/null")})
   end
 
   def test_forced_trigger
-    butler = RestartButler::Base.new(".", nil, nil)
-    butler.steps << :options
+    @butler.steps << :first
+    @butler.steps << :second
+    exception = assert_raises(RuntimeError) do
+      @butler.restart!
+    end
+    assert_equal "Second", exception.message
+  end
+
+  def test_options_for_step
+    @butler.steps << :options
     exception = assert_raises(Exception) do
-      butler.restart!
+      @butler.restart!
     end
     assert_equal "Options needed: :lolwut", exception.message
   end

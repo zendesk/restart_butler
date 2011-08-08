@@ -4,24 +4,26 @@ class RestartButler::Base
 
   BUMPFILE_PATH = "Bumpfile"
 
-  def initialize(root_dir, from_revision, to_revision, env = {})
+  def initialize(root_dir, from_revision, to_revision, opts = {})
     @root_dir = root_dir
     @from_revision = from_revision
     @to_revision = to_revision
     @git_dir = File.join(@root_dir, ".git")
     @forced_steps = []
     @steps = []
-    @env = env.map { |key, value| "#{key}=#{value}" }.join(" ")
+    @opts = opts
   end
 
   def run_command(command)
+    env = (@opts[:env] || {}).map { |key, value| "#{key}=#{value}" }.join(" ")
     cmd = "umask 002 && bash -l -c 'cd #{@root_dir} && env #{env} #{command}'"
-    log("Running: #{cmd}")
+    log("Running command: #{cmd}")
     system(cmd)
   end
 
-  def log(message)
-    STDOUT.puts("[RB] " + message)
+  def log(message, severity = :info)
+    @logger ||= (@opts[:logger] || ::Logger.new(STDOUT))
+    @logger.send(severity, "[FS:RB] " + message)
   end
 
   def changed_file?(file)

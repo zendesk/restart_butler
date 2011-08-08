@@ -1,3 +1,5 @@
+require "logger"
+
 module RestartButler
   autoload "Base",  "restart_butler/base"
 
