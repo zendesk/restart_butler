@@ -68,11 +68,11 @@ class RestartButler::Base
       step_class = RestartButler::Steps.const_get(step_name.to_s.capitalize)
       step = step_class.new(self, opts)
       if trigger?(step, step_name)
-        log("Running step '#{step_name}'"
+        log("Running step '#{step_name}'")
         step.execute
         @forced_steps |= step.triggers
       else
-        log("Step skipped '#{step_name}'"
+        log("Step skipped '#{step_name}'")
       end
     end
   end
