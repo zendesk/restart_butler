@@ -1,6 +1,6 @@
 class RestartButler::Steps::God < RestartButler::Steps::Base
   def execute
-    run "bin/god terminate"
+    butler.run_command("bin/god terminate")
     sleep 2
     butler.run_command("./bin/god -c #{opts[:god_path]}")
   end
