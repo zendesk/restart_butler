@@ -8,6 +8,6 @@ class RestartButler::Steps::Bundle < RestartButler::Steps::Base
   end
 
   def triggers
-    [:god]
+    [RestartButler::Steps::God]
   end
 end

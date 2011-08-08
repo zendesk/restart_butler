@@ -5,7 +5,7 @@ class RestartButler::Steps::First < RestartButler::Steps::Base
   end
 
   def triggers
-    [:second]
+    [RestartButler::Steps::Second]
   end
 end
 
@@ -34,8 +34,8 @@ class BasicTest < Test::Unit::TestCase
   end
 
   def test_forced_trigger
-    @butler.steps << :first
-    @butler.steps << :second
+    @butler.steps << RestartButler::Steps::First
+    @butler.steps << RestartButler::Steps::Second
     exception = assert_raises(RuntimeError) do
       @butler.restart!
     end
@@ -43,7 +43,7 @@ class BasicTest < Test::Unit::TestCase
   end
 
   def test_options_for_step
-    @butler.steps << :options
+    @butler.steps << RestartButler::Steps::Options
     exception = assert_raises(Exception) do
       @butler.restart!
     end

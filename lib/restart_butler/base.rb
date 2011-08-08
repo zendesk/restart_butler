@@ -62,24 +62,23 @@ class RestartButler::Base
   def restart!
     steps.each do |step_entry|
       if step_entry.is_a?(Array)
-        step_name, opts = step_entry
+        step_class, opts = step_entry
       else
-        step_name = step_entry
+        step_class = step_entry
         opts = {}
       end
-      step_class = RestartButler::Steps.const_get(step_name.to_s.capitalize)
       step = step_class.new(self, opts)
-      if trigger?(step, step_name)
-        log("Running step '#{step_name}'")
+      if trigger?(step)
+        log("Running step '#{step_class}'")
         step.execute
         @forced_steps |= step.triggers
       else
-        log("Step skipped '#{step_name}'")
+        log("Step skipped '#{step_class}'")
       end
     end
   end
 
-  def trigger?(step, step_name)
-    return (changed_bumpfile? or step.should_trigger? or @forced_steps.include?(step_name))
+  def trigger?(step)
+    return (changed_bumpfile? or step.should_trigger? or @forced_steps.include?(step.class))
   end
 end

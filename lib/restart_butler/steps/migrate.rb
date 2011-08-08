@@ -8,6 +8,6 @@ class RestartButler::Steps::Migrate < RestartButler::Steps::Base
   end
 
   def triggers
-    [:god]
+    [RestartButler::Steps::God]
   end
 end
