@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "restart_butler"
   s.version     = RestartButler::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Michal bugno"]
+  s.email       = ["michal@futuresimple.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{script/restart helper}
+  s.description = %q{Provides simpler way to restart apps}
 
   s.rubyforge_project = "restart_butler"
 
