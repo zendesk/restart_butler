@@ -14,7 +14,7 @@ class RestartButler::Base
   end
 
   def run_command(command)
-    cmd = "umask 002 && bash -l -c 'cd #{@root_dir} && #{command}"
+    cmd = "umask 002 && bash -l -c 'cd #{@root_dir} && #{command}'"
     log("[RB] Running: #{cmd}")
     system(cmd)
   end
