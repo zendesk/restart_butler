@@ -51,9 +51,15 @@ class RestartButler::Base
   end
 
   def restart!
-    steps.each do |step_name|
+    steps.each do |step_entry|
+      if step_entry.is_a?(Array)
+        step_name, opts = step_entry
+      else
+        step_name = step_entry
+        opts = {}
+      end
       step_class = RestartButler::Steps.const_get(step_name.to_s.capitalize)
-      step = step_class.new(self)
+      step = step_class.new(self, opts)
       if trigger?(step, step_name)
         step.execute
         @forced_steps |= step.triggers
