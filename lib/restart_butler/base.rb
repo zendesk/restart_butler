@@ -79,6 +79,6 @@ class RestartButler::Base
   end
 
   def trigger?(step)
-    return (changed_bumpfile? or step.should_trigger? or @forced_steps.include?(step.class))
+    changed_bumpfile? or step.should_trigger? or @forced_steps.include?(step.class)
   end
 end
