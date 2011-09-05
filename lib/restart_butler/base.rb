@@ -1,5 +1,5 @@
 class RestartButler::Base
-  attr_reader :from_revision, :to_revision, :root_dir, :git_dir, :changes
+  attr_reader :from_revision, :to_revision, :root_dir, :git_dir, :changes, :opts
   attr_accessor :steps, :env
 
   BUMPFILE_PATH = "Bumpfile"
@@ -79,6 +79,6 @@ class RestartButler::Base
   end
 
   def trigger?(step)
-    changed_bumpfile? or step.should_trigger? or @forced_steps.include?(step.class)
+    always_execute_step? or step.should_trigger? or @forced_steps.include?(step.class)
   end
 end

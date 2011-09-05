@@ -19,6 +19,11 @@ class RestartButler::Steps::Second < RestartButler::Steps::Base
   end
 end
 
+class RestartButler::Steps::NotRunning < RestartButler::Steps::Base
+  def execute
+  end
+end
+
 class RestartButler::Steps::Options < RestartButler::Steps::Base
   def execute
   end
@@ -48,5 +53,12 @@ class BasicTest < Test::Unit::TestCase
       @butler.restart!
     end
     assert_equal "Options needed: :lolwut", exception.message
+  end
+
+  def test_bumpfile_change_triggers_all_steps
+    @butler.steps << RestartButler::Steps::NotRunning
+    @butler.steps << RestartButler::Steps::NotRunning
+    @butler.steps << RestartButler::Steps::NotRunning
+    @butler.restart!
   end
 end

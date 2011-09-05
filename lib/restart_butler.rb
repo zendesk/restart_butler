@@ -11,5 +11,6 @@ module RestartButler
     autoload "Delayed", "restart_butler/steps/delayed"
     autoload "God", "restart_butler/steps/god"
     autoload "Migrate", "restart_butler/steps/migrate"
+    autoload "Thin", "restart_butler/steps/thin"
   end
 end
