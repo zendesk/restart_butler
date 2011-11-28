@@ -1,6 +1,6 @@
 class RestartButler::Steps::Cron < RestartButler::Steps::Base
   def execute
-    butler.run_command("./bin/whenever --update-crontab")
+    butler.run_command("./bin/whenever --update-crontab #{opts[:app_name]}")
   end
 
   def should_trigger?
