@@ -12,5 +12,6 @@ module RestartButler
     autoload "God", "restart_butler/steps/god"
     autoload "Migrate", "restart_butler/steps/migrate"
     autoload "Thin", "restart_butler/steps/thin"
+    autoload "Unicorn", "restart_butler/steps/unicorn"
   end
 end
