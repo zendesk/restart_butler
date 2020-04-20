@@ -8,7 +8,7 @@ Usage
 
 ```ruby
 # Gemfile
-gem 'restart_butler', :git => "git://github.com/michalbugno/restart_butler.git", :branch => "master"
+gem 'restart_butler', :git => "git://github.com/futuresimple/restart_butler.git", :branch => "master"
 ```
 
 ```ruby
@@ -30,3 +30,9 @@ butler.steps << :cron if ENV["CRON"] == "true"
 butler.steps << :delayed
 butler.restart!
 ```
+
+## Copyright and license
+
+Copyright 2020 Zendesk
+
+Licensed under the [Apache License, Version 2.0](LICENSE)
